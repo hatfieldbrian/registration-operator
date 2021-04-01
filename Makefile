@@ -160,8 +160,11 @@ apply-spoke-cr:
 	$(SED_CMD) -e "s,quay.io/open-cluster-management/registration,$(REGISTRATION_IMAGE)," -e "s,quay.io/open-cluster-management/work,$(WORK_IMAGE)," deploy/klusterlet/config/samples/operator_open-cluster-management_klusterlets.cr.yaml | $(KUBECTL) apply -f -
 
 apply-spoke-cr-kind:
+	mkdir -p munge-csv
+	cp deploy/klusterlet/config/samples/operator_open-cluster-management_klusterlets.cr.yaml munge-csv/operator_open-cluster-management_klusterlets.cr.yaml
+	$(SED_CMD) -e "s,cluster1,$(MANAGED_CLUSTER)," -i munge-csv/operator_open-cluster-management_klusterlets.cr.yaml
 	$(KUBECTL) config use-context $(MANAGED_CLUSTER)
-	$(KUBECTL) apply -f deploy/klusterlet/config/samples/operator_open-cluster-management_klusterlets.cr.yaml
+	$(KUBECTL) apply -f munge-csv/operator_open-cluster-management_klusterlets.cr.yaml
 
 clean-spoke: ensure-operator-sdk
 	$(KUBECTL) delete -f deploy/klusterlet/config/samples/operator_open-cluster-management_klusterlets.cr.yaml --ignore-not-found
