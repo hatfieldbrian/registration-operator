@@ -37,7 +37,6 @@ OLM_VERSION?=0.16.1
 KUBECTL?=kubectl
 KUBECONFIG?=./.kubeconfig
 KLUSTERLET_KUBECONFIG_CONTEXT?=$(shell $(KUBECTL) config current-context)
-KLUSTERLET_KIND_KUBECONFIG?=$(HOME)/cluster1-kubeconfig
 HUB_KIND_KUBECONFIG?=$(HOME)/hub-kubeconfig
 MANAGED_CLUSTER?=cluster1
 HUB_CLUSTER?=hub
